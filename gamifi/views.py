@@ -11,5 +11,5 @@ from django.utils import timezone
 
 
 def home(request):
-    return render(request, 'gamefi/index.html')
+    return render(request, 'gamifi/index.html')
 
