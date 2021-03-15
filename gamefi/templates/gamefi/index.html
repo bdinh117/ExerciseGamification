@@ -1,6 +1,9 @@
 <!DOCTYPE html>
+
 <html>
+{% load socialaccount %}
     {% load static %}
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,6 +14,12 @@
 <body>
 
    <h1>Gamefi Index Page</h1>
+    {% if user.is_authenticated %}
+  <p>Welcome, {{ user.username }} !</p>
+
+  {% else %}
+  <a href="{% provider_login_url 'google' %}">Login with Google</a>
+  {% endif %}
     
 </body>
 
