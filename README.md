@@ -2,7 +2,7 @@
 project-a-10 created by GitHub Classroom
 
 CS3240 Spring2021 Gamefi App
-url: https://gamifi-a10.herokuapp.com/gamefi/
+url: https://gamifi-a10.herokuapp.com/gamifi/
 
 Team Members:
 - Arash Azizi
