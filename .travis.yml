@@ -2,13 +2,13 @@ language: python
 python:
 - '3.9'
 install:
-- pip install -r requirements.txt
+- pip install -r requirements-travis.txt
 script:
 - python manage.py test
 deploy:
   provider: heroku
   api_key:
-    secure: 1687386e9887a0328d8d2c7f87fc61ee97daee3b
+    secure: c2fc6fc6-dc70-48a5-860d-7d59b1449b62
   app: gamifi-a10
   on:
     repo: uva-cs3240-s21/project-a-10
