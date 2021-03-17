@@ -8,7 +8,7 @@ script:
 deploy:
   provider: heroku
   api_key:
-    secure: c2fc6fc6-dc70-48a5-860d-7d59b1449b62
+    secure: 
   app: gamifi-a10
   on:
     repo: uva-cs3240-s21/project-a-10
