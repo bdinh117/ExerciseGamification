@@ -8,7 +8,7 @@ script:
 deploy:
   provider: heroku
   api_key:
-    secure: 
+    secure: MBRRNKW/yG3sO+StzduxBopZmVF3sfvXJ3bgLV27t0dSECqsQwHzGP3XXn7zMr40FxMKbDUCjMA90jrGtKpfc0v7h1Tzj9avwDT0RUPnJ1gvYveLgle2cGiErIIDXVPW/0pnWIY+6dbEsgx5X4/woLB+8nwzRJezo1W4dRDL5VlgMZ5EVlQNwnjlgxohbIP4mZiT4UzNbtZWZuVZrbFoDcxLst3YvvzYKeNLmFlLWvKeMxy/s5/SAAU0834DNsA5xpgMmaF0u6RPU4Z6br07YwQHioE59flvSulZFATy1rr66qqggnBDIk0fr4XLQZ/fYO9YgU7KpHsBAKDg4oZJ272hCk462LSFAnNO+U97C45WGCgulzO2UX3mvWxryk/rMmsfHOpVzbl+gZO4tEJT1PxTRV5RlWVEJgchXvsiZqAoZxhtHY4FeNtY0piS/KMbk1oPxwkQgFqk7ody1a5kMfAl/GPAYSxxe0XKe+W+OHRVy0kq2BccKdQ7/vnwDkPBSAONZ5IRVftfVuuSR+JRPl7CDIjMo5xmmOaaPmWZCCJvIVu1USC2Rd4D0Nnf6gJpUic0U3bfP+IKmuNuaQORrdcLQdXysakKHtSM1tFfd/aDUN5ys4Rz5f6MjaZR4mSSaf2RNBZReY1C9SYB/jp2swO8TEAdZm5BiK5VOsVQeb4=
   app: gamifi-a10
   on:
     repo: uva-cs3240-s21/project-a-10
