@@ -1,29 +1,15 @@
-<!DOCTYPE html>
-
-<html>
+{% extends "gamifi/base.html" %}
+{%block content %}
 {% load socialaccount %}
-    {% load static %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> 
-    <title>Group-A10 Project</title>  
+<h1>Gamefi Index Page</h1>
 
-
-<body>
-
-	<h1>Gamefi Index Page</h1>
-    {% if user.is_authenticated %}
-	<img src="{{ user.profile.image.url }}">
-	<h2>Welcome, {{ user.username }} !</h2>
-	<p>{{ user.email }}</p>
-
+{% if user.is_authenticated %}
+<img src="{{ user.profile.image.url }}">
+<h2>Welcome, {{ user.username }} !</h2>
+<p>{{ user.email }}</p>
   {% else %}
-  <a href="{% provider_login_url 'google' %}">Login with Google</a>
+    <a href="{% provider_login_url 'google' %}">Login with Google</a>
   {% endif %}
-    
-</body>
 
-
-</html>
+{% endblock %}
