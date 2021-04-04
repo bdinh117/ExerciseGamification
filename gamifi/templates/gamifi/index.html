@@ -5,7 +5,7 @@
 <h1>Gamefi Index Page</h1>
 
 {% if user.is_authenticated %}
-<img src="{{ user.profile.image.url }}">
+<img width="30%" height="30%" src="{{ user.profile.image.url }}">
 <h2>Welcome, {{ user.username }} !</h2>
 <p>{{ user.email }}</p>
   {% else %}
