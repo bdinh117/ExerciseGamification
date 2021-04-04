@@ -13,9 +13,11 @@
 
 <body>
 
-   <h1>Gamefi Index Page</h1>
+	<h1>Gamefi Index Page</h1>
     {% if user.is_authenticated %}
-  <p>Welcome, {{ user.username }} !</p>
+	<img src="{{ user.profile.image.url }}">
+	<h2>Welcome, {{ user.username }} !</h2>
+	<p>{{ user.email }}</p>
 
   {% else %}
   <a href="{% provider_login_url 'google' %}">Login with Google</a>
