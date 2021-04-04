@@ -8,8 +8,13 @@ from django.urls import reverse
 from django.views import generic
 
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
     return render(request, 'gamifi/index.html')
+
+@login_required
+def profile(request):
+    return render(request, 'gamifi/profile.html')
 

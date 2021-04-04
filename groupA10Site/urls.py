@@ -19,7 +19,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name="gamifi/index.html")),
+    path('', include('gamifi.urls')),
     path('gamifi/', include('gamifi.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
