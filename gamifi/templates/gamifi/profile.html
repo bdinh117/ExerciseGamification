@@ -8,4 +8,17 @@
 			<p>{{ user.email }}</p>
 		</div>
 	</div>
+
+<h1><p class="font-italic">Goals</p></h1>
+{% for goal in goals %}
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{ goal.title }}</h5>
+    <p class="card-text">{{ goal.text }}</p>
+  </div>
+</div>
+
+
+{% endfor %}
+<a class="btn btn-primary" href="{% url 'gamifi:edit-profile' %}" role="button">Edit Profile</a>
 {% endblock content %}

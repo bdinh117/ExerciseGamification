@@ -7,7 +7,8 @@ app_name = 'gamifi'
 
 urlpatterns = [
     path("", views.home, name="home"),
-    path('profile/', views.profile,name="profile")
+    path('profile/', views.profile,name="profile"),
+    path('editprofile/', views.edit_profile,name="edit-profile")
 ]
 
 if settings.DEBUG:
