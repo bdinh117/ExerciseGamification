@@ -9,6 +9,7 @@ from django.views import generic
 
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from .models import Goal
 
 
 def home(request):
@@ -16,5 +17,8 @@ def home(request):
 
 @login_required
 def profile(request):
-    return render(request, 'gamifi/profile.html')
+    context = {
+        'goals': Goal.objects.filter(user=request.user)
+    }
+    return render(request, 'gamifi/profile.html', context)
 

@@ -8,4 +8,9 @@
 			<p>{{ user.email }}</p>
 		</div>
 	</div>
+
+{% for goal in goals %}
+{{ goal.title }}
+{{ goal.text  }}
+{% endfor %}
 {% endblock content %}
