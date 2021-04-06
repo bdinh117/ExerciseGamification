@@ -21,7 +21,7 @@ class testIfProfileIsDeleted(TestCase):
     def testProfileExists(self):
         user = User.objects.get(username="Player1")
         user.delete()
-       self.assertTrue(not Profile.objects.all().exists())
+        self.assertTrue(not Profile.objects.all().exists())
 
 class AddGoalFormTest(TestCase):
     def test_title_starting_lowercase(self):
