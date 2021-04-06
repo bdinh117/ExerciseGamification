@@ -12,7 +12,7 @@ class testIfProfileIsCreated(TestCase):
     def testProfileExists(self):
         user = User.objects.get(username="Player1")
         self.assertEqual(str(user.profile),"Player1 Profile")
-'''
+
 
 class testIfProfileIsDeleted(TestCase):
     def setUp(self):
@@ -29,4 +29,4 @@ class AddGoalFormTest(TestCase):
         self.assertTrue(form.is_valid())
         form.save()
         self.assertTrue(Goal.objects.filter(title="Goal1",text="this is a goal").exists())
-
+'''
