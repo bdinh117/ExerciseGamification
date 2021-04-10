@@ -9,8 +9,8 @@ from django.views import generic
 
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from .models import Goal
-from .forms import UserUpdateForm, ProfileUpdateForm, GoalUpdateForm
+from .models import Goal, Exercise
+from .forms import UserUpdateForm, ProfileUpdateForm, GoalUpdateForm, ExerciseForm
 
 def home(request):
     return render(request, 'gamifi/index.html')
@@ -48,4 +48,19 @@ def edit_profile(request):
     }
 
     return render(request, 'gamifi/edit_profile.html', context)
+
+class ExerciseCreateView(generic.CreateView):
+    form_class = ExerciseForm
+    template_name = 'gamifi/exercise_form.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class ExerciseListView(generic.ListView):
+    model= Exercise
+    template_name = 'gamifi/index.html'
+
+    def get_queryset(self):#filter what objects to get a list of
+        return Exercise.objects.filter(user=self.request.user)#only get the user's own Exercises.
 

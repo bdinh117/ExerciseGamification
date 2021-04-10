@@ -11,4 +11,29 @@
     <a href="{% provider_login_url 'google' %}">Login with Google</a>
   {% endif %}
 
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Type</th>
+      <th scope="col">Duration</th>
+      <th scope="col">Mark as Complete</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for exercise in exercise_list %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{exercise.name}}</td>
+      <td>{{exercise.category}}</td>
+      <td>{{exercise.duration}}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+
+
 {% endblock %}

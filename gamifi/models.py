@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
 class Profile(models.Model):
@@ -16,3 +17,26 @@ class Goal(models.Model):
 
     def __str__(self):
         return self.text
+
+class Exercise(models.Model):
+    CATEGORY_CHOICES = [
+        ('Cardio', 'CARDIO'),
+        ('Strength Training', 'STRENGTH TRAINING'),
+        ('Flexibility Training', 'FLEXIBILITY TRAINING')
+    ]
+    NAME_CHOICES =[
+        ('Running', 'RUNNING'),
+        ('Swimming', 'SWIMMING'),
+        ('Push-Ups', 'PUSH-UPS'),
+        ('Weight Lifting', 'WEIGHT LIFTING'),
+        ('Stretches', 'STRETCHES'),
+        ('Yoga', 'YOGA')
+    ]
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    name = models.CharField(max_length=50,choices=NAME_CHOICES)
+    category = models.CharField(max_length=50,choices=CATEGORY_CHOICES)
+    finished = models.BooleanField(default=False)
+    duration = models.IntegerField()
+
+    def get_absolute_url(self):
+        return reverse('gamifi:home')
