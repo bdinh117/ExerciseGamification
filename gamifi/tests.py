@@ -4,7 +4,6 @@ from .models import Profile, Goal
 from .forms import GoalUpdateForm
 
 # Create your tests here.
-'''
 class testIfProfileIsCreated(TestCase):
     def setUp(self):
         User.objects.create_user(username="Player1",email="example@gmail.com",password="123456")
@@ -29,4 +28,3 @@ class AddGoalFormTest(TestCase):
         self.assertTrue(form.is_valid())
         form.save()
         self.assertTrue(Goal.objects.filter(title="Goal1",text="this is a goal").exists())
-'''
