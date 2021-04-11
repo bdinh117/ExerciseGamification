@@ -2,13 +2,52 @@
 {%block content %}
 {% load socialaccount %}
 
-<h1>Gamefi Index Page</h1>
 
 {% if user.is_authenticated %}
+
+
 <h2>Welcome, {{ user.username }} !</h2>
 <p>{{ user.email }}</p>
   {% else %}
-    <a href="{% provider_login_url 'google' %}">Login with Google</a>
-  {% endif %}
+  <div class="container">
+    <div class="row" >
+        <div class="col-lg-12 text-center">
 
+            <h2 class="section-heading">We should place a catchy app name or slogan here!</h2>
+            <hr class="primary" />
+            <p>
+                Text about the APP and what our goal is.I'm going to add a background image here but this a template for now. Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit. Praesent vitae dui lectus. In a
+                dui elit. Suspendisse magna tortor, rutrum ut consectetur a,
+                tempor eu nibh. Maecenas scelerisque turpis nunc, vel
+                finibus dui facilisis ac. Nullam tincidunt purus ac ante
+                rhoncus laoreet. Aenean mollis lorem ac quam imperdiet
+                placerat. Sed vehicula orci et tincidunt sollicitudin. Sed
+                quis placerat lorem. Aliquam at dolor eu nibh pretium
+                ultricies id a ex. Fusce sollicitudin hendrerit neque id
+                imperdiet. Fusce malesuada tempus ante non eleifend. Proin
+                in euismod quam. Maecenas interdum vehicula augue ut
+                volutpat. Fusce maximus purus vel est accumsan feugiat. Ut
+                quam neque, dignissim sit amet elit viverra, molestie ornare
+                nisi. Maecenas eget ex ornare, molestie dui eget, cursus
+                nibh. Phasellus euismod ut velit sed scelerisque. Donec in
+                suscipit nulla, faucibus cursus dui. Mauris quis porta nisl.
+                Interdum et malesuada fames ac ante ipsum primis in
+                faucibus. Pellentesque sapien orci, sollicitudin sed
+                pharetra eu, fermentum sit amet sapien. Cras interdum semper
+                justo ac aliquam. Nullam turpis tortor, tristique ac rhoncus
+                et, tempus ac metus. Vestibulum ut dapibus augue, nec
+                laoreet ligula. Maecenas eget turpis tellus. Integer sem
+                nulla, consequat eget justo vel, imperdiet rhoncus lorem.
+                Aliquam erat volutpat. Donec dapibus tempus consequat. Etiam
+                placerat rhoncus euismod. Morbi sit amet varius est. Donec
+                tincidunt metus elit, molestie fermentum libero pulvinar et.
+                Integer fringilla turpis magna. Morbi tristique sed leo at
+                scelerisque.
+            </p>
+        </div>
+
+    </div>
+</div>
+  {% endif %}
 {% endblock %}
