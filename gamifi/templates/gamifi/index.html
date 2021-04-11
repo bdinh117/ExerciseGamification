@@ -11,6 +11,7 @@
     <a href="{% provider_login_url 'google' %}">Login with Google</a>
   {% endif %}
 
+{{exp_total}}
 
 <table class="table">
   <thead class="thead-dark">
@@ -27,8 +28,8 @@
     <tr>
       <th scope="row">{{ forloop.counter }}</th>
       <td>{{exercise.name}}</td>
-      <td>{{exercise.category}}</td>
-      <td>{{exercise.duration}}</td>
+      <td> {{exercise.category}}</td>
+      <td>{{exercise.duration}}{% if exercise.category != "Cardio" %} Repetitions{%else%} Minutes{% endif %}</td>
     </tr>
   {% endfor %}
   </tbody>

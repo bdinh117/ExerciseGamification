@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
+from django.db.models import Sum
 
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
@@ -13,7 +14,12 @@ from .models import Goal, Exercise
 from .forms import UserUpdateForm, ProfileUpdateForm, GoalUpdateForm, ExerciseForm
 
 def home(request):
-    return render(request, 'gamifi/index.html')
+    exp_total=Exercise.objects.filter(user=request.user, finished=True).aggregate(Sum('exp'))
+    context = {
+        'exercise_list': Exercise.objects.filter(user=request.user),
+        'exp_total': exp_total['exp__sum']
+    }
+    return render(request, 'gamifi/index.html',context)
 
 @login_required
 def profile(request):
@@ -49,7 +55,19 @@ def edit_profile(request):
 
     return render(request, 'gamifi/edit_profile.html', context)
 
+class ExerciseDetailView(generic.DetailView):
+    model = Exercise
+
 class ExerciseCreateView(generic.CreateView):
+    form_class = ExerciseForm
+    template_name = 'gamifi/exercise_form.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class ExerciseUpdateView(generic.UpdateView):
+    model = Exercise
     form_class = ExerciseForm
     template_name = 'gamifi/exercise_form.html'
 

@@ -37,6 +37,8 @@ class Exercise(models.Model):
     category = models.CharField(max_length=50,choices=CATEGORY_CHOICES)
     finished = models.BooleanField(default=False)
     duration = models.IntegerField()
+    exp= models.IntegerField(default=100)
 
     def get_absolute_url(self):
         return reverse('gamifi:home')
+
