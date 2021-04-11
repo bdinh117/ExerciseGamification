@@ -27,7 +27,7 @@
       <th scope="row">{{ forloop.counter }}</th>
       <td>{{exercise.name}}</td>
       <td> {{exercise.category}}</td>
-      <td>{{exercise.duration}}{% if exercise.category != "Cardio" %} Repetitions{%else%} Minutes{% endif %}</td>
+      <td>{{exercise.duration}} {{exercise.duration_suffix}}</td>
     </tr>
   {% endfor %}
   </tbody>

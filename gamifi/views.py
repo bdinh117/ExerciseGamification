@@ -10,14 +10,24 @@ from django.db.models import Sum
 
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from .models import Goal, Exercise
-from .forms import UserUpdateForm, ProfileUpdateForm, GoalUpdateForm, ExerciseForm
+from .models import Goal, AerobicExercise, StrengthExercise, FlexibilityExercise, Exercise
+from .forms import UserUpdateForm, ProfileUpdateForm, GoalUpdateForm, AerobicExerciseForm, StrengthExerciseForm, FlexibilityExerciseForm
+from itertools import chain
 
 def home(request):
-    exp_total=Exercise.objects.filter(user=request.user, finished=True).aggregate(Sum('exp'))
+    aerobic_total=AerobicExercise.objects.filter(user=request.user, finished=True).aggregate(Sum('exp'))['exp__sum']
+    strength_total = StrengthExercise.objects.filter(user=request.user, finished=True).aggregate(Sum('exp'))['exp__sum']
+    flexibility_total= StrengthExercise.objects.filter(user=request.user, finished=True).aggregate(Sum('exp'))['exp__sum']
+
+    exp_total=sum(filter(None,[aerobic_total,strength_total,flexibility_total]))
+
+    aerobic_list=AerobicExercise.objects.filter(user=request.user)
+    strength_list= StrengthExercise.objects.filter(user=request.user)
+    flexibility_list= FlexibilityExercise.objects.filter(user=request.user)
+    exercise_list=list(chain(aerobic_list, strength_list, flexibility_list))
     context = {
-        'exercise_list': Exercise.objects.filter(user=request.user),
-        'exp_total': exp_total['exp__sum']
+        'exercise_list': exercise_list,
+        'exp_total': exp_total
     }
     return render(request, 'gamifi/index.html',context)
 
@@ -55,30 +65,70 @@ def edit_profile(request):
 
     return render(request, 'gamifi/edit_profile.html', context)
 
-class ExerciseDetailView(generic.DetailView):
-    model = Exercise
+# class ExerciseDetailView(generic.DetailView):
+#     model = Exercise
 
-class ExerciseCreateView(generic.CreateView):
-    form_class = ExerciseForm
+class AerobicCreateView(generic.CreateView):
+    form_class = AerobicExerciseForm
     template_name = 'gamifi/exercise_form.html'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class ExerciseUpdateView(generic.UpdateView):
-    model = Exercise
-    form_class = ExerciseForm
+
+
+class AerobicUpdateView(generic.UpdateView):
+    model = AerobicExercise
+    form_class = AerobicExerciseForm
     template_name = 'gamifi/exercise_form.html'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class ExerciseListView(generic.ListView):
-    model= Exercise
-    template_name = 'gamifi/index.html'
+class StrengthCreateView(generic.CreateView):
+    form_class = StrengthExerciseForm
+    template_name = 'gamifi/exercise_form.html'
 
-    def get_queryset(self):#filter what objects to get a list of
-        return Exercise.objects.filter(user=self.request.user)#only get the user's own Exercises.
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+
+class StrengthUpdateView(generic.UpdateView):
+    model = StrengthExercise
+    form_class = StrengthExerciseForm
+    template_name = 'gamifi/exercise_form.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class FlexibilityCreateView(generic.CreateView):
+    form_class = FlexibilityExerciseForm
+    template_name = 'gamifi/exercise_form.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+
+class FlexibilityUpdateView(generic.UpdateView):
+    model = FlexibilityExercise
+    form_class = FlexibilityExerciseForm
+    template_name = 'gamifi/exercise_form.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+# class ExerciseListView(generic.ListView):
+#     model= Exercise
+#     template_name = 'gamifi/index.html'
+#
+#     def get_queryset(self):#filter what objects to get a list of
+#         return Exercise.objects.filter(user=self.request.user)#only get the user's own Exercises.
 

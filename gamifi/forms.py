@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile, Goal, Exercise
+from .models import Profile, Goal, AerobicExercise, StrengthExercise, FlexibilityExercise
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
@@ -18,16 +18,19 @@ class GoalUpdateForm(forms.ModelForm):
         model = Goal
         fields = ['title','text']
 
-class ExerciseForm(forms.ModelForm):
+class AerobicExerciseForm(forms.ModelForm):
     class Meta:
-        model = Exercise
-        fields = ['category','name','duration','finished']
+        model = AerobicExercise
+        fields = ['name','duration','duration_suffix','finished']
 
-    # def __init__(self, *args, **kwargs):
-    #     super(ExerciseForm, self).__init__(*args, **kwargs)
-    #
-    #     if self.instance and self.instance.category is 'Cardio':
-    #         new_choices = list(self.fields['name'].choices)
-    #         new_choices = [e for e in new_choices if e not in ('Running', 'Swimming')]
-    #         self.fields['name'].choices = new_choices
-    #         self.fields['name'].widget.choices = new_choices
+class StrengthExerciseForm(forms.ModelForm):
+    class Meta:
+        model = StrengthExercise
+        fields = ['name','duration','duration_suffix','finished']
+
+class FlexibilityExerciseForm(forms.ModelForm):
+    class Meta:
+        model = FlexibilityExercise
+        fields = ['name', 'duration', 'duration_suffix','finished']
+
+
