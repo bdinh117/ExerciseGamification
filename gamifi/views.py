@@ -9,7 +9,7 @@ from django.views import generic
 
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from .models import Goal
+from .models import Profile, Goal, Friend_Request
 from .forms import UserUpdateForm, ProfileUpdateForm, GoalUpdateForm
 
 def home(request):
@@ -22,6 +22,25 @@ def profile(request):
     }
     return render(request, 'gamifi/profile.html', context)
 
+@login_required
+def send_friend_request(request,userID):
+    from_user = request.user
+    to_user = Profile.objects.get(id=userID)
+    friend_request, created = Friend_Request.object.get_or_create(from_user=from_user,to_user=to_user)
+    if created:
+        return HttpResponse('friend request sent')
+    else:
+        return HttpResponse('friend request was already sent')
+@login_required
+def accept_friend_request(request,requestID):
+    friend_request = Friend_Request.objects.get(id=requestID)
+    if friend_request.to_user == request.user:
+        friend_request.to_user.friends.add(friend_request.from_user)
+        friend_request.from_user.friends.add(friend_request.to_user)
+        friend_request.delete()
+        return HttpResponse('friend request was accepted')
+    else:
+        return HttpResponse('friend request not accepted')
 @login_required
 def edit_profile(request):
     if request.method == 'POST': #
