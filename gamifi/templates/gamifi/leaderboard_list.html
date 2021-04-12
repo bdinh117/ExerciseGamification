@@ -1,0 +1,23 @@
+{% extends "gamifi/base.html" %}
+{%block content %}
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Rank</th>
+      <th scope="col">Name</th>
+      <th scope="col">Experience</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for a in user_list%}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td> {{a}}</td>
+      <td>{{a.total}}</td>
+    </tr>
+  {%endfor%}
+  </tbody>
+</table>
+
+{% endblock %}

@@ -10,7 +10,7 @@ from django.db.models import Sum
 
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from .models import Goal, AerobicExercise, StrengthExercise, FlexibilityExercise, Exercise, User
+from .models import Goal, AerobicExercise, StrengthExercise, FlexibilityExercise, Exercise, User, Profile
 from .forms import UserUpdateForm, ProfileUpdateForm, GoalUpdateForm, AerobicExerciseForm, StrengthExerciseForm, FlexibilityExerciseForm
 from itertools import chain
 from django.forms import inlineformset_factory
@@ -26,6 +26,7 @@ def activity_log(request):
     flexibility_total= FlexibilityExercise.objects.filter(user=request.user, finished=True).aggregate(Sum('exp'))['exp__sum']
 
     exp_total=sum(filter(None,[aerobic_total,strength_total,flexibility_total]))
+    Profile.objects.filter(user=request.user).update(experience=exp_total)
 
     aerobic_list=AerobicExercise.objects.filter(user=request.user)
     strength_list= StrengthExercise.objects.filter(user=request.user)
@@ -160,3 +161,20 @@ class FlexibilityUpdateView(generic.UpdateView):
 #     def get_queryset(self):#filter what objects to get a list of
 #         return Exercise.objects.filter(user=self.request.user)#only get the user's own Exercises.
 
+class LeaderboardListView(generic.ListView):
+    model= User
+    template_name = 'gamifi/leaderboard_list.html'
+    #context_object_name is object_list
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        # leaders = User.objects.filter(aerobicexercise__finished=True) \
+        #     .annotate(total=Sum('aerobicexercise__exp'))
+        # leaders2 =User.objects.filter(strengthexercise__finished=True) \
+        #     .annotate(total=Sum('strengthexercise__exp'))
+        #students = User.objects.values('aerobicexercise__studName').annotate(tot=Sum('attendance'))
+
+        leaders = User.objects.annotate(total=Sum('profile__experience')).order_by('-total')
+        context['user_list'] = leaders
+        return context
