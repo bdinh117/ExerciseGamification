@@ -6,8 +6,7 @@
 {% if user.is_authenticated %}
 
 
-<h2>Welcome, {{ user.username }} !</h2>
-<p>{{ user.email }}</p>
+<h2>Activity Log</h2>
 <a class="btn btn-primary" href="{% url 'gamifi:exercise-create' %}">ADD AN EXERCISE</a>
 {{exp_total}}
 
