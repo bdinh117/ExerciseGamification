@@ -28,7 +28,7 @@ class Exercise(models.Model):
     # category = models.CharField(max_length=50,choices=CATEGORY_CHOICES)
 
     def get_absolute_url(self):
-        return reverse('gamifi:home')
+        return reverse('gamifi:activity-log')
 
 class AerobicExercise(Exercise):
     NAME_CHOICES = [

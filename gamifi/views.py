@@ -15,7 +15,12 @@ from .forms import UserUpdateForm, ProfileUpdateForm, GoalUpdateForm, AerobicExe
 from itertools import chain
 from django.forms import inlineformset_factory
 
+
 def home(request):
+    return render(request, 'gamifi/index.html')
+
+@login_required
+def activity_log(request):
     aerobic_total=AerobicExercise.objects.filter(user=request.user, finished=True).aggregate(Sum('exp'))['exp__sum']
     strength_total = StrengthExercise.objects.filter(user=request.user, finished=True).aggregate(Sum('exp'))['exp__sum']
     flexibility_total= FlexibilityExercise.objects.filter(user=request.user, finished=True).aggregate(Sum('exp'))['exp__sum']
@@ -51,7 +56,7 @@ def home(request):
         'exp_total': exp_total
     }
 
-    return render(request, 'gamifi/index.html',context)
+    return render(request, 'gamifi/activity_log.html',context)
 
 @login_required
 def profile(request):

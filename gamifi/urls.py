@@ -9,6 +9,7 @@ app_name = 'gamifi'
 urlpatterns = [
     path("", views.home, name="home"),
     #path('exercise/<int:pk>/', ExerciseDetailView.as_view(), name='exercise-detail'),
+    path('activity_log/',views.activity_log,name="activity-log"),
     path('profile/', views.profile,name="profile"),
     path('editprofile/', views.edit_profile,name="edit-profile"),
     path('exercise/new/',TemplateView.as_view(template_name="gamifi/choose_exercise.html"),name= 'exercise-create'),
