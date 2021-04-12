@@ -22,6 +22,7 @@ class Exercise(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     finished = models.BooleanField(default=False)
     duration = models.PositiveSmallIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
     class Meta:
         abstract = True
     # category = models.CharField(max_length=50,choices=CATEGORY_CHOICES)
@@ -46,6 +47,11 @@ class AerobicExercise(Exercise):
     exp = models.IntegerField(default=100)
     duration_suffix = models.CharField(max_length=50,choices =SUFFIX_CHOICES)
 
+    @property
+    def type(self):
+        "Returns the exercise type(aerobic)."
+        return 'Aerobic'
+
 class StrengthExercise(Exercise):
     NAME_CHOICES = [
         ('Push-Ups', 'PUSH-UPS'),
@@ -61,6 +67,11 @@ class StrengthExercise(Exercise):
     exp = models.IntegerField(default=217)
     duration_suffix = models.CharField(max_length=50,choices =SUFFIX_CHOICES)
 
+    @property
+    def type(self):
+        "Returns the exercise type(aerobic)."
+        return 'Strength'
+
 class FlexibilityExercise(Exercise):
     NAME_CHOICES = [
         ('Lunges', 'LUNGES'),
@@ -75,5 +86,10 @@ class FlexibilityExercise(Exercise):
     name = models.CharField(max_length=50, choices=NAME_CHOICES)
     exp = models.IntegerField(default=50)
     duration_suffix = models.CharField(max_length=50,choices =SUFFIX_CHOICES)
+
+    @property
+    def type(self):
+        "Returns the exercise type(aerobic)."
+        return 'Flexibility'
 
 

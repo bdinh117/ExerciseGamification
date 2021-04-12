@@ -1,0 +1,43 @@
+{% extends "gamifi/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <div class="card" style="width: 18rem;">
+  <img src="{% static 'gamifi/images/cardio.png' %}" class="card-img-top" alt="aerobic">
+  <div class="card-body">
+    <h5 class="card-title">Aerobic Training</h5>
+    <p class="card-text">Add aerobic exercises such as running, swimming...</p>
+    <a href="{%url 'gamifi:aerobic-create' %}" class="btn btn-primary stretched-link">Add Exercise</a>
+  </div>
+</div>
+    </div>
+    <div class="col-sm">
+      <div class="card" style="width: 18rem;">
+  <img src="{% static 'gamifi/images/strength.png' %}" class="card-img-top" alt="strength">
+  <div class="card-body">
+    <h5 class="card-title">Strength Training</h5>
+    <p class="card-text">Add strength exercises such as deadlifts, pushups...</p>
+    <a href="{%url 'gamifi:strength-create' %}" class="btn btn-primary stretched-link">Add Exercise</a>
+  </div>
+</div>
+    </div>
+    <div class="col-sm">
+      <div class="card" style="width: 18rem;">
+  <img src="{% static 'gamifi/images/flexibility.png' %}" class="card-img-top" alt="flexibility">
+  <div class="card-body">
+    <h5 class="card-title">Flexibility Training</h5>
+    <p class="card-text">Add flexibility exercises such as stretches</p>
+    <a href="{%url 'gamifi:flexibility-create' %}" class="btn btn-primary stretched-link">Add Exercise</a>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock content %}
+<!--source https://getbootstrap.com/docs/4.4/utilities/stretched-link/ -->
