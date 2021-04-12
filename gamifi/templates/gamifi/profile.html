@@ -1,11 +1,20 @@
 {% extends 'gamifi/base.html' %}
 
+{% block title %}
+My Profile
+{% endblock title %}
 {% block content %}
 	<div>
 		<img class="account-img" src="{{ user.profile.image.url }}">
 		<div>
 			<h2>{{ user.username }}</h2>
 			<p>{{ user.email }}</p>
+		</div>
+		<div>
+		<h2> Friends({{ profile.get_friends_count }})</h2>
+		 {% for friend in profile.get_friends %}
+			{{friend}}
+		 {% end for %}
 		</div>
 	</div>
 
