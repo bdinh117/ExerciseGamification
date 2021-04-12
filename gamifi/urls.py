@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import AerobicCreateView, AerobicUpdateView, StrengthCreateView, StrengthUpdateView, FlexibilityCreateView,FlexibilityUpdateView
+from .views import AerobicCreateView, AerobicUpdateView, StrengthCreateView, StrengthUpdateView, FlexibilityCreateView,FlexibilityUpdateView,LeaderboardListView
 from django.views.generic import TemplateView
 app_name = 'gamifi'
 
@@ -10,6 +10,7 @@ urlpatterns = [
     path("", views.home, name="home"),
     #path('exercise/<int:pk>/', ExerciseDetailView.as_view(), name='exercise-detail'),
     path('activity_log/',views.activity_log,name="activity-log"),
+    path('leaderboard/',LeaderboardListView.as_view(),name='leaderboard'),
     path('profile/', views.profile,name="profile"),
     path('editprofile/', views.edit_profile,name="edit-profile"),
     path('exercise/new/',TemplateView.as_view(template_name="gamifi/choose_exercise.html"),name= 'exercise-create'),
