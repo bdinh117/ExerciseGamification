@@ -11,16 +11,13 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .models import Goal
 from .forms import UserUpdateForm, ProfileUpdateForm, GoalUpdateForm
-from django.contrib.auth.models import User
 
 def home(request):
     return render(request, 'gamifi/index.html')
 
 @login_required
 def profile(request):
-    profile = profile.objects.get(user=request.user)
     context = {
-        'profile':profile,
         'goals': Goal.objects.filter(user=request.user)
     }
     return render(request, 'gamifi/profile.html', context)
