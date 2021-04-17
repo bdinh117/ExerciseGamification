@@ -26,7 +26,6 @@ class Exercise(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     class Meta:
         abstract = True
-    # category = models.CharField(max_length=50,choices=CATEGORY_CHOICES)
 
     def get_absolute_url(self):
         return reverse('gamifi:activity-log')

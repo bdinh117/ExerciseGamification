@@ -8,7 +8,6 @@ app_name = 'gamifi'
 
 urlpatterns = [
     path("", views.home, name="home"),
-    #path('exercise/<int:pk>/', ExerciseDetailView.as_view(), name='exercise-detail'),
     path('activity_log/',views.activity_log,name="activity-log"),
     path('leaderboard/',LeaderboardListView.as_view(),name='leaderboard'),
     path('profile/', views.profile,name="profile"),

@@ -13,7 +13,6 @@ from django.contrib.auth.decorators import login_required
 from .models import Goal, AerobicExercise, StrengthExercise, FlexibilityExercise, Exercise, User, Profile
 from .forms import UserUpdateForm, ProfileUpdateForm, GoalUpdateForm, AerobicExerciseForm, StrengthExerciseForm, FlexibilityExerciseForm
 from itertools import chain
-from django.forms import inlineformset_factory
 
 
 def home(request):
@@ -21,36 +20,20 @@ def home(request):
 
 @login_required
 def activity_log(request):
+    #For every exercise completed, sum up exp
     aerobic_total=AerobicExercise.objects.filter(user=request.user, finished=True).aggregate(Sum('exp'))['exp__sum']
     strength_total = StrengthExercise.objects.filter(user=request.user, finished=True).aggregate(Sum('exp'))['exp__sum']
     flexibility_total= FlexibilityExercise.objects.filter(user=request.user, finished=True).aggregate(Sum('exp'))['exp__sum']
 
+    #update exp total for user
     exp_total=sum(filter(None,[aerobic_total,strength_total,flexibility_total]))
     Profile.objects.filter(user=request.user).update(experience=exp_total)
 
+    #pass exercises into template
     aerobic_list=AerobicExercise.objects.filter(user=request.user)
     strength_list= StrengthExercise.objects.filter(user=request.user)
     flexibility_list= FlexibilityExercise.objects.filter(user=request.user)
     exercise_list=list(chain(aerobic_list, strength_list, flexibility_list))
-    # AerobicFormSet = inlineformset_factory(User,AerobicExercise, fields=('finished',))
-    # StrengthFormSet = inlineformset_factory(User,StrengthExercise, fields=('finished',))
-    # FlexibilityFormSet = inlineformset_factory(User,FlexibilityExercise, fields=('finished',))
-    # if request.method == 'POST':
-    #     a_formset=AerobicFormSet(request.POST,instance=request.user)
-    #     s_formset = StrengthFormSet(request.POST, instance=request.user)
-    #     f_formset = FlexibilityFormSet(request.POST, instance=request.user)
-    #
-    #     if a_formset.is_valid() and s_formset.is_valid() and f_formset.is_valid():
-    #         a_formset.save()
-    #         s_formset.save()
-    #         f_formset.save()
-    #         return redirect('gamifi:home')
-    #
-    # else:
-    #     a_formset = AerobicFormSet(instance=request.user)
-    #     s_formset = StrengthFormSet( instance=request.user)
-    #     f_formset = FlexibilityFormSet(instance=request.user)
-
 
     context = {
         'exercise_list': exercise_list,
@@ -68,7 +51,7 @@ def profile(request):
 
 @login_required
 def edit_profile(request):
-    if request.method == 'POST': #
+    if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if(not request.user.goal_set.exists()):
@@ -93,8 +76,6 @@ def edit_profile(request):
 
     return render(request, 'gamifi/edit_profile.html', context)
 
-# class ExerciseDetailView(generic.DetailView):
-#     model = Exercise
 
 class AerobicCreateView(generic.CreateView):
     form_class = AerobicExerciseForm
@@ -154,13 +135,6 @@ class FlexibilityUpdateView(generic.UpdateView):
         return super().form_valid(form)
 
 
-# class ExerciseListView(generic.ListView):
-#     model= Exercise
-#     template_name = 'gamifi/index.html'
-#
-#     def get_queryset(self):#filter what objects to get a list of
-#         return Exercise.objects.filter(user=self.request.user)#only get the user's own Exercises.
-
 class LeaderboardListView(generic.ListView):
     model= User
     template_name = 'gamifi/leaderboard_list.html'
@@ -168,13 +142,8 @@ class LeaderboardListView(generic.ListView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
-        # leaders = User.objects.filter(aerobicexercise__finished=True) \
-        #     .annotate(total=Sum('aerobicexercise__exp'))
-        # leaders2 =User.objects.filter(strengthexercise__finished=True) \
-        #     .annotate(total=Sum('strengthexercise__exp'))
-        #students = User.objects.values('aerobicexercise__studName').annotate(tot=Sum('attendance'))
 
+        #return list of users with their total exp in their profile. pass it into context
         leaders = User.objects.annotate(total=Sum('profile__experience')).order_by('-total')
         context['user_list'] = leaders
         return context
