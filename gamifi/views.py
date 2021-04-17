@@ -10,13 +10,38 @@ from django.db.models import Sum
 
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from .models import Goal, AerobicExercise, StrengthExercise, FlexibilityExercise, Exercise, User, Profile
+from .models import Goal, AerobicExercise, StrengthExercise, FlexibilityExercise, Exercise, User, Profile, FriendRequest
 from .forms import UserUpdateForm, ProfileUpdateForm, GoalUpdateForm, AerobicExerciseForm, StrengthExerciseForm, FlexibilityExerciseForm
 from itertools import chain
+from django.contrib import messages
 
 
 def home(request):
     return render(request, 'gamifi/index.html')
+
+@login_required
+def send_friend_request(request, pk):
+    sender = request.user
+    receiver = User.objects.get(pk=pk)
+    friend_request, created = FriendRequest.objects.get_or_create(sender=sender, receiver=receiver)
+    if created:
+        messages.success(request, "friend request sent!")
+        return redirect('profile')
+    else:
+        messages.ERROR(request, "friend request was already sent")
+        return HttpResponse("already sent")
+
+@login_required
+def accept_friend_request(request,pk):
+    friend_request=FriendRequest.objects.get(pk=pk)
+    if friend_request.sender == request.user:
+        friend_request.sender.friends.add(request.user)
+        friend_request.receiver.friends.add(friend_request.sender)
+        friend_request.delete()
+        messages.success(request, "friend request accepted!")
+        return redirect('profile')
+    else:
+        return HttpResponse('friend request not accepted')
 
 @login_required
 def activity_log(request):

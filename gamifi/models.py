@@ -5,11 +5,16 @@ from django.urls import reverse
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    friends = models.ManyToManyField(User,related_name='friends')
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     experience = models.IntegerField(default=0)
 
     def __str__(self):
         return f'{self.user.username} Profile'
+
+class FriendRequest(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE,related_name='receiver')
 
 class Goal(models.Model):
     title = models.CharField(max_length = 100)
