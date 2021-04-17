@@ -32,7 +32,7 @@
                     <a class="nav-link " href="{%url 'gamifi:activity-log' %}">Activity Log</a>
                 </li>
                 <li>
-                    <a class="nav-link" href="{% url 'gamifi:profile' %}">My Profile</a>
+                    <a class="nav-link" href="{% url 'gamifi:profile' user.username %}">My Profile</a>
                 </li>
                 <li>
                 <a class="nav-link" href="{% url 'logout' %}">Sign-Out</a>

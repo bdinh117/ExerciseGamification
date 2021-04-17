@@ -68,9 +68,10 @@ def activity_log(request):
     return render(request, 'gamifi/activity_log.html',context)
 
 @login_required
-def profile(request):
+def profile(request,username):
     context = {
-        'goals': Goal.objects.filter(user=request.user)
+        'goals': Goal.objects.filter(user=User.objects.get(username=username)),
+        'usr':User.objects.get(username=username)
     }
     return render(request, 'gamifi/profile.html', context)
 
