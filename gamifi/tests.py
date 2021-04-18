@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
-from .models import Profile, Goal
-from .forms import GoalUpdateForm
+from .models import Profile
+
 
 # Create your tests here.
 class testIfProfileIsCreated(TestCase):
@@ -22,9 +22,3 @@ class testIfProfileIsDeleted(TestCase):
         user.delete()
         self.assertTrue(not Profile.objects.all().exists())
 
-class AddGoalFormTest(TestCase):
-    def test_title_starting_lowercase(self):
-        form = GoalUpdateForm(data={"title": "Goal1","text":"this is a goal"})
-        self.assertTrue(form.is_valid())
-        form.save()
-        self.assertTrue(Goal.objects.filter(title="Goal1",text="this is a goal").exists())
