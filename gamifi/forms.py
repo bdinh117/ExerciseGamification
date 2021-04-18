@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile, Goal, AerobicExercise, StrengthExercise, FlexibilityExercise
+from .models import Profile, Comment, AerobicExercise, StrengthExercise, FlexibilityExercise
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
@@ -11,12 +11,12 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['image']
+        fields = ['image','bio']
 
-class GoalUpdateForm(forms.ModelForm):
+class CommentForm(forms.ModelForm):
     class Meta:
-        model = Goal
-        fields = ['title','text']
+        model = Comment
+        fields = ['title','body']
 
 class AerobicExerciseForm(forms.ModelForm):
     class Meta:

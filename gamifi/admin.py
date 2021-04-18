@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Profile, Goal,AerobicExercise,StrengthExercise,FlexibilityExercise,FriendRequest
+from .models import Profile,AerobicExercise,StrengthExercise,FlexibilityExercise,FriendRequest,Comment
 # Register your models here.
 
 admin.site.register(Profile)
-admin.site.register(Goal)
+admin.site.register(Comment)
 admin.site.register(AerobicExercise)
 admin.site.register(StrengthExercise)
 admin.site.register(FlexibilityExercise)

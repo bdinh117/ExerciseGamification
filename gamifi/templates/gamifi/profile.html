@@ -1,5 +1,5 @@
 {% extends 'gamifi/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 	<div>
 		<img class="account-img" src="{{ usr.profile.image.url }}">
@@ -9,20 +9,38 @@
 		</div>
 	</div>
 
-<h1><p class="font-italic">Goals</p></h1>
-{% for goal in goals %}
+
 <div class="card" style="width: 18rem;">
   <div class="card-body">
-    <h5 class="card-title">{{ goal.title }}</h5>
-    <p class="card-text">{{ goal.text }}</p>
+    <h5 class="card-title">About Me</h5>
+    <p class="card-text">{{ usr.profile.bio }}</p>
   </div>
 </div>
 
+  {% for comment in comments %}
+        <div class="comments" style="padding: 10px;">
+          <p class="font-weight-bold">
+            {{user.username}} {{ comment.title }}
+            <span class=" text-muted font-weight-normal">
+              {{ comment.created_on }}
+            </span>
+          </p>
+          {{ comment.body | linebreaks }}
+        </div>
+        {% endfor %}
 
-{% endfor %}
 {% if user == usr %}
 <a class="btn btn-primary" href="{% url 'gamifi:edit-profile' %}" role="button">Edit Profile</a>
 {% elif usr not in friends_list%}
 <a class="btn btn-primary" href="{% url 'gamifi:send-friend-request' usr.id %}" role="button">Send Friend Request</a>
+{% else %}
+<h3>Leave a comment</h3>
+        <form method="post" style="margin-top: 1.3em;">
+			{% csrf_token %}
+          {{ c_form|crispy }}
+          <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+        </form>
 {%endif%}
 {% endblock content %}
+
+<!--source https://djangocentral.com/creating-comments-system-with-django/ -->

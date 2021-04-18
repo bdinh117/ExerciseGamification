@@ -10,8 +10,8 @@ from django.db.models import Sum
 
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from .models import Goal, AerobicExercise, StrengthExercise, FlexibilityExercise, Exercise, User, Profile, FriendRequest
-from .forms import UserUpdateForm, ProfileUpdateForm, GoalUpdateForm, AerobicExerciseForm, StrengthExerciseForm, FlexibilityExerciseForm
+from .models import AerobicExercise, StrengthExercise, FlexibilityExercise, Exercise, User, Profile, FriendRequest
+from .forms import UserUpdateForm, ProfileUpdateForm, AerobicExerciseForm, StrengthExerciseForm, FlexibilityExerciseForm, CommentForm
 from itertools import chain
 from django.contrib import messages
 
@@ -84,10 +84,23 @@ def activity_log(request):
 
 @login_required
 def profile(request,username):
+    # the user of the profile being viewed. "user" in the template is the person viewing the page
+    usr = User.objects.get(username=username)
+    #handle commenting
+    if request.method == 'POST':
+        c_form = CommentForm(data=request.POST)
+        if c_form.is_valid():
+            new_comment= c_form.save(commit=False) #get the new comment
+            new_comment.profile = usr.profile #tie it to the profile being commented on
+            new_comment.save()
+            return redirect('gamifi:profile',username=username)
+    else:
+        c_form=CommentForm()
     context = {
-        'goals': Goal.objects.filter(user=User.objects.get(username=username)),
-        'usr':User.objects.get(username=username), #the user of the profile being viewed. "user" in the template is the person viewing the page
+        'usr':usr,
         'friends': request.user.profile.friends.all(), #pass in a list of friends for the purpose of deciding what buttons appear on the page
+        'c_form': c_form,
+        'comments':usr.profile.comment_set.all()
     }
     return render(request, 'gamifi/profile.html', context)
 
@@ -96,24 +109,18 @@ def edit_profile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        if(not request.user.goal_set.exists()):
-            request.user.goal_set.create()
-        g_form = GoalUpdateForm(request.POST,instance=request.user.goal_set.first())
-        if u_form.is_valid() and p_form.is_valid() and g_form.is_valid():
+        if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            g_form.save()
             return redirect('gamifi:profile',username=request.user.username)
 
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
-        g_form = GoalUpdateForm(instance=request.user.goal_set.first())
 
     context = {
         'u_form': u_form,
         'p_form': p_form,
-        'g_form': g_form
     }
 
     return render(request, 'gamifi/edit_profile.html', context)
