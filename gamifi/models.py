@@ -24,77 +24,100 @@ class Comment(models.Model):
     created_on=models.DateTimeField(auto_now_add=True)
 
 class Exercise(models.Model):
+    NAME_CHOICES = [
+                ('Running', 'RUNNING'),
+                ('Swimming', 'SWIMMING'),
+                ('Biking', 'BIKING'),
+                ('Walking', 'WALKING')
+            ]
+    SUFFIX_CHOICES = [
+            ('Repetitions', 'repetitions'),
+            ('Minutes', 'minutes'),
+            ('Hours', 'hours'),
+            ('Laps', 'laps')
+        ]
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     finished = models.BooleanField(default=False)
     duration = models.PositiveSmallIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
-    class Meta:
-        abstract = True
+
+    category = models.CharField(max_length=20)
+    name = models.CharField(max_length=50, choices=NAME_CHOICES)
+    exp = models.IntegerField(default=100)
+    duration_suffix = models.CharField(max_length=50, choices=SUFFIX_CHOICES)
 
     def get_absolute_url(self):
         return reverse('gamifi:activity-log')
 
-class AerobicExercise(Exercise):
-    NAME_CHOICES = [
-        ('Running', 'RUNNING'),
-        ('Swimming', 'SWIMMING'),
-        ('Biking', 'BIKING'),
-        ('Walking', 'WALKING')
-    ]
-    SUFFIX_CHOICES = [
-        ('Repetitions', 'repetitions'),
-        ('Minutes', 'minutes'),
-        ('Hours', 'hours'),
-        ('Laps', 'laps')
-    ]
-    name = models.CharField(max_length=50, choices=NAME_CHOICES)
-    exp = models.IntegerField(default=100)
-    duration_suffix = models.CharField(max_length=50,choices =SUFFIX_CHOICES)
+class ExerciseChoice(models.Model):
+    name = models.CharField(max_length=100)
+    description=models.TextField()
+    image_url=models.CharField(max_length=100)
+    category=models.CharField(max_length=20)
 
-    @property
-    def type(self):
-        "Returns the exercise type(aerobic)."
-        return 'Aerobic'
 
-class StrengthExercise(Exercise):
-    NAME_CHOICES = [
-        ('Push-Ups', 'PUSH-UPS'),
-        ('Deadlift', 'DEADLIFT'),
-        ('Pull-ups', 'PULL-UPS')
-    ]
 
-    SUFFIX_CHOICES = [
-        ('Repetitions', 'repetitions'),
-        ('Sets', 'sets'),
-        ('Minutes', 'minutes')
-    ]
-    name = models.CharField(max_length=50, choices=NAME_CHOICES)
-    exp = models.IntegerField(default=217)
-    duration_suffix = models.CharField(max_length=50,choices =SUFFIX_CHOICES)
-
-    @property
-    def type(self):
-        "Returns the exercise type(aerobic)."
-        return 'Strength'
-
-class FlexibilityExercise(Exercise):
-    NAME_CHOICES = [
-        ('Lunges', 'LUNGES'),
-        ('Butterfly Stretch', 'BUTTERFLY STRETCH'),
-        ('Yoga', 'YOGA')
-    ]
-    SUFFIX_CHOICES = [
-        ('Repetitions', 'repetitions'),
-        ('Sets', 'sets'),
-        ('Minutes', 'minutes')
-    ]
-    name = models.CharField(max_length=50, choices=NAME_CHOICES)
-    exp = models.IntegerField(default=50)
-    duration_suffix = models.CharField(max_length=50,choices =SUFFIX_CHOICES)
-
-    @property
-    def type(self):
-        "Returns the exercise type(aerobic)."
-        return 'Flexibility'
+# class AerobicExercise(Exercise):
+#     NAME_CHOICES = [
+#         ('Running', 'RUNNING'),
+#         ('Swimming', 'SWIMMING'),
+#         ('Biking', 'BIKING'),
+#         ('Walking', 'WALKING')
+#     ]
+#     SUFFIX_CHOICES = [
+#         ('Repetitions', 'repetitions'),
+#         ('Minutes', 'minutes'),
+#         ('Hours', 'hours'),
+#         ('Laps', 'laps')
+#     ]
+#     name = models.CharField(max_length=50, choices=NAME_CHOICES)
+#     exp = models.IntegerField(default=100)
+#     duration_suffix = models.CharField(max_length=50,choices =SUFFIX_CHOICES)
+#
+#     @property
+#     def type(self):
+#         "Returns the exercise type(aerobic)."
+#         return 'Aerobic'
+#
+# class StrengthExercise(Exercise):
+#     NAME_CHOICES = [
+#         ('Push-Ups', 'PUSH-UPS'),
+#         ('Deadlift', 'DEADLIFT'),
+#         ('Pull-ups', 'PULL-UPS')
+#     ]
+#
+#     SUFFIX_CHOICES = [
+#         ('Repetitions', 'repetitions'),
+#         ('Sets', 'sets'),
+#         ('Minutes', 'minutes')
+#     ]
+#     name = models.CharField(max_length=50, choices=NAME_CHOICES)
+#     exp = models.IntegerField(default=217)
+#     duration_suffix = models.CharField(max_length=50,choices =SUFFIX_CHOICES)
+#
+#     @property
+#     def type(self):
+#         "Returns the exercise type(aerobic)."
+#         return 'Strength'
+#
+# class FlexibilityExercise(Exercise):
+#     NAME_CHOICES = [
+#         ('Lunges', 'LUNGES'),
+#         ('Butterfly Stretch', 'BUTTERFLY STRETCH'),
+#         ('Yoga', 'YOGA')
+#     ]
+#     SUFFIX_CHOICES = [
+#         ('Repetitions', 'repetitions'),
+#         ('Sets', 'sets'),
+#         ('Minutes', 'minutes')
+#     ]
+#     name = models.CharField(max_length=50, choices=NAME_CHOICES)
+#     exp = models.IntegerField(default=50)
+#     duration_suffix = models.CharField(max_length=50,choices =SUFFIX_CHOICES)
+#
+#     @property
+#     def type(self):
+#         "Returns the exercise type(aerobic)."
+#         return 'Flexibility'
 
 
