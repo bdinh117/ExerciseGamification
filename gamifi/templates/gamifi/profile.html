@@ -20,6 +20,9 @@
 
 
 {% endfor %}
+{% if user == usr %}
 <a class="btn btn-primary" href="{% url 'gamifi:edit-profile' %}" role="button">Edit Profile</a>
-<a class="btn btn-primary" href="{% url 'gamifi:send-friend-request' user.id %}" role="button">Send Friend Request</a>
+{% elif usr not in friends_list%}
+<a class="btn btn-primary" href="{% url 'gamifi:send-friend-request' usr.id %}" role="button">Send Friend Request</a>
+{%endif%}
 {% endblock content %}

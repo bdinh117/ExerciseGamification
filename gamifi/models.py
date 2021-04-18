@@ -5,7 +5,7 @@ from django.urls import reverse
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    friends = models.ManyToManyField(User,related_name='friends')
+    friends = models.ManyToManyField(User,related_name='friends',blank=True)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     experience = models.IntegerField(default=0)
 

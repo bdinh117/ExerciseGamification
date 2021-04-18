@@ -1,0 +1,15 @@
+{% extends "gamifi/base.html" %}
+{%block content %}
+
+{% for friend in object_list %}
+
+{{friend.username}}
+
+{% endfor %}
+{% for request in all_friend_requests %}
+
+{{request.sender}}
+<a class="btn btn-primary" href="{% url 'gamifi:accept-friend-request' request.id %}" role="button">Accept</a>
+
+{% endfor %}
+{% endblock %}

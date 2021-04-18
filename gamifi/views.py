@@ -25,27 +25,42 @@ def send_friend_request(request, pk):
     receiver = User.objects.get(pk=pk)
     friend_request, created = FriendRequest.objects.get_or_create(sender=sender, receiver=receiver)
     if created:
-        messages.success(request, "friend request sent!")
-        return redirect('profile')
+        #messages.success(request, "friend request sent!")
+        return redirect('gamifi:profile',username=request.user.username)
     else:
-        messages.ERROR(request, "friend request was already sent")
+        #messages.ERROR(request, "friend request was already sent")
         return HttpResponse("already sent")
 
 @login_required
 def accept_friend_request(request,pk):
     friend_request=FriendRequest.objects.get(pk=pk)
-    if friend_request.sender == request.user:
-        friend_request.sender.friends.add(request.user)
-        friend_request.receiver.friends.add(friend_request.sender)
+    if friend_request.receiver == request.user:
+        friend_request.sender.profile.friends.add(request.user)
+        friend_request.receiver.profile.friends.add(friend_request.sender)
         friend_request.delete()
         messages.success(request, "friend request accepted!")
-        return redirect('profile')
+        return redirect('gamifi:profile',username=request.user.username)
     else:
         return HttpResponse('friend request not accepted')
 
+class UserFriendsListView(generic.ListView):
+    model = User
+    template_name = "gamifi/friends_list.html"
+
+    def get_queryset(self):
+        return self.request.user.profile.friends.all()
+        #return User.objects.filter(profile__friends=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the friend requests that the user has been sent
+        context['all_friend_requests'] = FriendRequest.objects.filter(receiver=self.request.user)
+        return context
+
 @login_required
 def activity_log(request):
-    #For every exercise completed, sum up exp
+    #For every completed exercise, sum up exp
     aerobic_total=AerobicExercise.objects.filter(user=request.user, finished=True).aggregate(Sum('exp'))['exp__sum']
     strength_total = StrengthExercise.objects.filter(user=request.user, finished=True).aggregate(Sum('exp'))['exp__sum']
     flexibility_total= FlexibilityExercise.objects.filter(user=request.user, finished=True).aggregate(Sum('exp'))['exp__sum']
@@ -71,7 +86,8 @@ def activity_log(request):
 def profile(request,username):
     context = {
         'goals': Goal.objects.filter(user=User.objects.get(username=username)),
-        'usr':User.objects.get(username=username)
+        'usr':User.objects.get(username=username), #the user of the profile being viewed. "user" in the template is the person viewing the page
+        'friends': request.user.profile.friends.all(), #pass in a list of friends for the purpose of deciding what buttons appear on the page
     }
     return render(request, 'gamifi/profile.html', context)
 
@@ -87,7 +103,7 @@ def edit_profile(request):
             u_form.save()
             p_form.save()
             g_form.save()
-            return redirect('gamifi:profile')
+            return redirect('gamifi:profile',username=request.user.username)
 
     else:
         u_form = UserUpdateForm(instance=request.user)
@@ -112,7 +128,6 @@ class AerobicCreateView(generic.CreateView):
         return super().form_valid(form)
 
 
-
 class AerobicUpdateView(generic.UpdateView):
     model = AerobicExercise
     form_class = AerobicExerciseForm
@@ -129,7 +144,6 @@ class StrengthCreateView(generic.CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-
 
 
 class StrengthUpdateView(generic.UpdateView):
@@ -150,7 +164,6 @@ class FlexibilityCreateView(generic.CreateView):
         return super().form_valid(form)
 
 
-
 class FlexibilityUpdateView(generic.UpdateView):
     model = FlexibilityExercise
     form_class = FlexibilityExerciseForm
@@ -159,7 +172,6 @@ class FlexibilityUpdateView(generic.UpdateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-
 
 class LeaderboardListView(generic.ListView):
     model= User
