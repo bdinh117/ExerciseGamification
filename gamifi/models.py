@@ -65,7 +65,7 @@ class StrengthExercise(Exercise):
     parse_json = json.loads(data)
     for x in parse_json['results']:
         if (x['language']['id'] == 2):
-            NAME_CHOICES.append((x['name'], x['name']))
+            NAME_CHOICES.append((x['name'], x['name'].upper))
 
     SUFFIX_CHOICES = [
         ('Repetitions', 'repetitions'),
