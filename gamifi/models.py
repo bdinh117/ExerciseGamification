@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+import requests
+import json
 
 # Create your models here.
 class Profile(models.Model):
@@ -62,6 +64,13 @@ class StrengthExercise(Exercise):
         ('Deadlift', 'DEADLIFT'),
         ('Pull-ups', 'PULL-UPS')
     ]
+    response_API = requests.get('https://wger.de/api/v2/exerciseinfo/?format=json&limit=1000')
+    data = response_API.text
+    parse_json = json.loads(data)
+    for x in parse_json['results']:
+        if (x['language']['id'] == 2):
+            NAME_CHOICES.append((x['name'], x['name'].upper))
+
     SUFFIX_CHOICES = [
         ('Repetitions', 'repetitions'),
         ('Sets', 'sets'),
