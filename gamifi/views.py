@@ -14,6 +14,17 @@ from .models import AerobicExercise, StrengthExercise, FlexibilityExercise, Exer
 from .forms import UserUpdateForm, ProfileUpdateForm, AerobicExerciseForm, StrengthExerciseForm, FlexibilityExerciseForm, CommentForm
 from itertools import chain
 from django.contrib import messages
+import requests
+import json
+
+def get_exercises(request):
+    url ="https://wger.de/api/v2/exercise/"
+    PARAMS ={'language':'2','limit':'300'}
+    headers = {'Accept': 'application/json','Authorization': 'Token ***REMOVED***'}
+    response = requests.get(url=url,headers=headers,params=PARAMS)
+    exercises = response.json()["results"]
+    context = {'exercises':exercises}
+    return render(request,'gamifi/catalog.html',context)
 
 
 def home(request):

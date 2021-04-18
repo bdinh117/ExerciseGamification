@@ -31,7 +31,7 @@
 
 {% if user == usr %}
 <a class="btn btn-primary" href="{% url 'gamifi:edit-profile' %}" role="button">Edit Profile</a>
-{% elif usr not in friends_list%}
+{% elif usr not in friends %}
 <a class="btn btn-primary" href="{% url 'gamifi:send-friend-request' usr.id %}" role="button">Send Friend Request</a>
 {% else %}
 <h3>Leave a comment</h3>
