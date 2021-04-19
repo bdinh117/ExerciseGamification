@@ -8,6 +8,7 @@
 
 <h2>Activity Log</h2>
 <a class="btn btn-primary" href="{% url 'gamifi:exercise-create' %}">ADD AN EXERCISE</a>
+<a class="btn btn-primary" href="{% url 'gamifi:exercise-catalog' %}">ADD EXERCISE FROM CATALOG</a>
 {{exp_total}}
 
 <table class="table">
@@ -25,15 +26,8 @@
   {% for exercise in exercise_list %}
     <tr>
       <th scope="row">{{ forloop.counter }}</th>
-      <td>{% if exercise.type == 'Aerobic' %}
-          <a href="{% url 'gamifi:aerobic-update' exercise.id %}">{{exercise.name}}</a>
-          {%elif exercise.type == 'Strength'%}
-          <a href="{% url 'gamifi:strength-update' exercise.id %}">{{exercise.name}}</a>
-          {%elif exercise.type == 'Flexibility'%}
-          <a href="{% url 'gamifi:flexibility-update' exercise.id %}">{{exercise.name}}</a>
-              {%endif%}
-              </td>
-      <td> {{exercise.type}}</td>
+      <td><a href="{% url 'gamifi:exercise-update' exercise.id %}">{{exercise.name}}</a></td>
+      <td> {{exercise.category}}</td>
       <td>{{exercise.duration}} {{exercise.duration_suffix}}</td>
         <td>{{exercise.created_at}}</td>
       <td>{{exercise.finished}}</td>

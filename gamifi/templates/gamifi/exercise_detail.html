@@ -1,8 +1,25 @@
 {% extends "gamifi/base.html" %}
 {%block content %}
+<div class = "container">
+    <br><br>
+    <div class="row">
+        <div class="col-md-5">
+          <br>
+          <img class="img-fluid" src="{{ object.image_url }}" alt="" style = "width: 90%;">
+          <br><br>
+          <h3 class="card-title text-center ">{{ object.name }}</h3>
+        </div>
+        <div class="col-md-7 shadow-lg p-3 mb-5 bg-white rounded">
+          <h1 class="my-3">Exercise Description</h1>
+          <p class = "lead">{{ object.description }}</p>
+          <h1 class="my-3">Exercise Details</h1>
+          <ul>
+            <li>{{ object.category }}</li>
+          </ul>
+            <a class="btn btn-primary" href="{% url 'gamifi:exercise-create-preset' name=object.name type=object.category %}" role="button">Add Exercise</a>
+        </div>
+    </div>
+</div>
 
-{{object.name}}
-{{object.category}}
-{{object.finished}}
-{{object.duration}}
 {% endblock %}
+<!--SOURCE: https://dev.to/yahaya_hk/how-to-populate-your-database-with-data-from-an-external-api-in-django-398i-->
