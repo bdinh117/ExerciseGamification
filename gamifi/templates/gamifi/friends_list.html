@@ -1,15 +1,27 @@
 {% extends "gamifi/base.html" %}
 {%block content %}
-
+<div class = "container">
+    <h2>Your Friends</h2>
 {% for friend in object_list %}
+<ul class="list-group">
+  <li class="list-group-item"><a href="{% url 'gamifi:profile' friend.username %}">{{friend.username}}</a></li>
+</ul>
+{% endfor %}
+</div>
 
-{{friend.username}}
+<div class="container px-4">
+    <h2>Friend Requests</h2>
+{% for fr in all_friend_requests %}
+<div class="row gx-5">
+    <div class="col">
+        <div class="p-3 border bg-light"><a href="{% url 'gamifi:profile' fr.sender.username %}"><h3>FROM: </h3>{{fr.sender}}</a></div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light"><a class="btn btn-primary" href="{% url 'gamifi:accept-friend-request' fr.id %}" role="button">Accept</a></div>
+    </div>
+  </div>
 
 {% endfor %}
-{% for request in all_friend_requests %}
+</div>
 
-{{request.sender}}
-<a class="btn btn-primary" href="{% url 'gamifi:accept-friend-request' request.id %}" role="button">Accept</a>
-
-{% endfor %}
 {% endblock %}
