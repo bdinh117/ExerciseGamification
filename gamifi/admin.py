@@ -1,10 +1,12 @@
 from django.contrib import admin
-from .models import Profile,AerobicExercise,StrengthExercise,FlexibilityExercise,FriendRequest,Comment
+from .models import Profile, FriendRequest,Comment, ExerciseChoice, Exercise
 # Register your models here.
 
 admin.site.register(Profile)
 admin.site.register(Comment)
-admin.site.register(AerobicExercise)
-admin.site.register(StrengthExercise)
-admin.site.register(FlexibilityExercise)
+admin.site.register(ExerciseChoice)
+admin.site.register(Exercise)
+# admin.site.register(AerobicExercise)
+# admin.site.register(StrengthExercise)
+# admin.site.register(FlexibilityExercise)
 admin.site.register(FriendRequest)
