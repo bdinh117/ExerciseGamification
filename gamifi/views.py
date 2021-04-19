@@ -83,18 +83,37 @@ def accept_friend_request(request,pk):
     else:
         return HttpResponse('friend request not accepted')
 
+@login_required
+def deny_friend_request(request,pk):
+    friend_request=FriendRequest.objects.get(pk=pk)
+    if friend_request.receiver == request.user:
+        friend_request.delete()
+        messages.success(request, "friend request denied!")
+        return redirect('gamifi:profile',username=request.user.username)
+    else:
+        return HttpResponse('---------------')
+
+@login_required
+def unfriend(request,username):
+   ex_friend=User.objects.get(username=username)
+
+   #sever the bond. :(
+   request.user.profile.friends.remove(ex_friend)
+   ex_friend.profile.friends.remove(request.user)
+   return redirect('gamifi:friends-list')
+
 class UserFriendsListView(generic.ListView):
     model = User
     template_name = "gamifi/friends_list.html"
 
     def get_queryset(self):
-        return self.request.user.profile.friends.all()
+        return self.request.user.profile.friends.all() #get all of the user's friends, in object_list
         #return User.objects.filter(profile__friends=self.request.user)
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the friend requests that the user has been sent
+        # Add in a QuerySet of all the friend requests sent to this user
         context['all_friend_requests'] = FriendRequest.objects.filter(receiver=self.request.user)
         return context
 
@@ -115,7 +134,7 @@ def activity_log(request):
 
 @login_required
 def profile(request,username):
-    # the user of the profile being viewed. "user" in the template is the person viewing the page
+    # 'usr' is who the profile being viewed belongs to. "user" in the template is the person viewing the page
     usr = User.objects.get(username=username)
     #handle commenting
     if request.method == 'POST':
