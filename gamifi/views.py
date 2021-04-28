@@ -17,7 +17,6 @@ from django.contrib import messages
 import requests
 import re
 
-
 def home(request):
     return render(request, 'gamifi/index.html')
 
