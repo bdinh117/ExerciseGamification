@@ -6,6 +6,7 @@ from .views import (LeaderboardListView, UserFriendsListView,ExerciseChoiceDetai
 from django.views.generic import TemplateView
 app_name = 'gamifi'
 
+
 urlpatterns = [
     path("", views.home, name="home"),
     path('activity_log/',views.activity_log,name="activity-log"),
