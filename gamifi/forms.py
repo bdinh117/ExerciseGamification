@@ -23,7 +23,6 @@ class ExerciseForm(forms.ModelForm):
         fields = ['name','duration','duration_suffix','category','finished']
 
 
-
 # class AerobicExerciseForm(forms.ModelForm):
 #     class Meta:
 #         model = AerobicExercise
