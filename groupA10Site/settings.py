@@ -91,10 +91,6 @@ DATABASES = {
         'PASSWORD': '5b4ab9c7d8d00bd06f5ed5960b82de2f58f7c6f09249d82219b679091bdac92b',
         'HOST': 'ec2-3-222-127-167.compute-1.amazonaws.com',
         'PORT': '5432',
-         'TEST': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
     }
 }
 
