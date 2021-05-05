@@ -1,6 +1,7 @@
 {% extends "gamifi/base.html" %}
 {%block content %}
 
+<h1 style="text-align:center" class="display-1">Current Leaderboard</h1>
 <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -14,7 +15,7 @@
     <tr>
       <th scope="row">{{ forloop.counter }}</th>
       <td> <a href="{% url 'gamifi:profile' u.username %}">{{u}}</a></td>
-      <td>{{u.total}}</td>
+      <td>{{u.total}} XP</td>
     </tr>
   {%endfor%}
   </tbody>

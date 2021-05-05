@@ -1,18 +1,17 @@
 {% extends 'gamifi/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-	<div class="text-center">
-		<img class="account-img; rounded-circle" src="{{ usr.profile.image.url }}" style="width:165px;height:165px;">
-		<div>
-			<h2>{{ usr.username }}</h2>
-			<p>{{ usr.email }}</p>
+	<div class="media" style="justify-content: center">
+		<img class="account-img rounded-circle" src="{{ usr.profile.image.url }}" style="width:165px;height:165px;">
+		<div class="align-self-center">
+			<h2 class="display-2">{{ usr.username }}</h2>
+			<h5 class="display-5">{{ usr.email }}</h5>
 		</div>
 	</div>
 
-	
-		<div class="card" style="width: 18rem;">
+		<div class="card mx-auto" style="text-align:center; width: 18rem;">
 		  <div class="card-body">
-			<h5 class="card-title">About Me</h5>
+			<h5 class="card-title display-7">About Me</h5>
 			<p class="card-text">{{ usr.profile.bio }}</p>
 		  </div>
 		</div>
@@ -30,9 +29,13 @@
         {% endfor %}
 
 {% if user == usr %}
-<a class="btn btn-primary" href="{% url 'gamifi:edit-profile' %}" role="button">Edit Profile</a>
+<div style="text-align: center">
+<a class="btn btn-outline-primary mx-auto" href="{% url 'gamifi:edit-profile' %}" role="button">Edit Profile</a>
+</div>
 {% elif usr not in friends %}
-<a class="btn btn-primary" href="{% url 'gamifi:send-friend-request' usr.id %}" role="button">Send Friend Request</a>
+<div style="text-align: center">
+<a class="btn btn-outline-primary" href="{% url 'gamifi:send-friend-request' usr.id %}" role="button">Send Friend Request</a>
+</div>
 {% else %}
 <h3>Leave a comment</h3>
         <form method="post" style="margin-top: 1.3em;">
