@@ -1,22 +1,22 @@
 {% extends 'gamifi/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-	<div>
-		<img class="account-img" src="{{ usr.profile.image.url }}">
+	<div class="text-center">
+		<img class="account-img; rounded-circle" src="{{ usr.profile.image.url }}" style="width:165px;height:165px;">
 		<div>
 			<h2>{{ usr.username }}</h2>
 			<p>{{ usr.email }}</p>
 		</div>
 	</div>
 
-
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">About Me</h5>
-    <p class="card-text">{{ usr.profile.bio }}</p>
-  </div>
-</div>
-
+	
+		<div class="card" style="width: 18rem;">
+		  <div class="card-body">
+			<h5 class="card-title">About Me</h5>
+			<p class="card-text">{{ usr.profile.bio }}</p>
+		  </div>
+		</div>
+	
   {% for comment in comments %}
         <div class="comments" style="padding: 10px;">
           <p class="font-weight-bold">
