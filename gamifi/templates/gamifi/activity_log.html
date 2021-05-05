@@ -6,10 +6,13 @@
 {% if user.is_authenticated %}
 
 
-<h2>Activity Log</h2>
-<a class="btn btn-primary" href="{% url 'gamifi:exercise-create' %}">ADD AN EXERCISE</a>
-<a class="btn btn-primary" href="{% url 'gamifi:exercise-catalog' %}">ADD EXERCISE FROM CATALOG</a>
-{{exp_total}}
+<h1 style="text-align:center" class="display-1">Activity Log</h1>
+<h4 style="text-align:center" class="display-4">Your Current Experience: {{exp_total}} XP</h4>
+<div style="text-align: center">
+<a class="btn btn-outline-primary" href="{% url 'gamifi:exercise-create' %}">ADD AN EXERCISE</a>
+<a class="btn btn-outline-primary" href="{% url 'gamifi:exercise-catalog' %}">ADD EXERCISE FROM CATALOG</a>
+<!--{{exp_total}}-->
+</div>
 
 <table class="table">
   <thead class="thead-dark">

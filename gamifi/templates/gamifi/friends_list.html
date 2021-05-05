@@ -1,7 +1,7 @@
 {% extends "gamifi/base.html" %}
 {%block content %}
-<div class = "container">
-    <h2>Your Friends</h2>
+<div class = "container" style="text-align: center">
+    <h1 class="display-1">Your Friends</h1>
     {% for friend in object_list %}
     <ul class="list-group">
         <li class="list-group-item"><a href="{% url 'gamifi:profile' friend.username %}">{{friend.username}}</a>
@@ -11,7 +11,7 @@
 </div>
 
 <div class = "container">
-    <h2>Friend Requests</h2>
+    <h4 class="display-4">Friend Requests</h4>
     {% for fr in all_friend_requests %}
     <ul class="list-group">
         <li class="list-group-item"><a href="{% url 'gamifi:profile' fr.sender.username %}">{{fr.sender}}</a>
