@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'groupA10Site.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'dbmv9pn02uf06m',
         'USER': 'kclwfnltjykygc',
         'PASSWORD': '5b4ab9c7d8d00bd06f5ed5960b82de2f58f7c6f09249d82219b679091bdac92b',
