@@ -23,19 +23,6 @@ class ExerciseForm(forms.ModelForm):
         fields = ['name','duration','duration_suffix','category','finished']
 
 
-# class AerobicExerciseForm(forms.ModelForm):
-#     class Meta:
-#         model = AerobicExercise
-#         fields = ['name','duration','duration_suffix','finished']
-#
-# class StrengthExerciseForm(forms.ModelForm):
-#     class Meta:
-#         model = StrengthExercise
-#         fields = ['name','duration','duration_suffix','finished']
-#
-# class FlexibilityExerciseForm(forms.ModelForm):
-#     class Meta:
-#         model = FlexibilityExercise
-#         fields = ['name', 'duration', 'duration_suffix','finished']
+
 
 

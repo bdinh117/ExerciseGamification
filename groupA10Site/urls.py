@@ -26,7 +26,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('logout', LogoutView.as_view(),name="logout"),
 ]
-
+#REFERENCED for logging in/out: https://whizzoe.medium.com/in-5-mins-set-up-google-login-to-sign-up-users-on-django-e71d5c38f5d5
 
 
 

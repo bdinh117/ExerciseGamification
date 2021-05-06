@@ -22,6 +22,7 @@ def home(request):
 
 @login_required
 def catalog(request):
+    #REFERENCED THIS SOURCE:  https://dev.to/yahaya_hk/how-to-populate-your-database-with-data-from-an-external-api-in-django-398i
     if (ExerciseChoice.objects.count()==0):
         url ="https://wger.de/api/v2/exerciseinfo/"
         PARAMS ={'language':'2','limit':'300'}
@@ -70,6 +71,8 @@ def send_friend_request(request, pk):
         #messages.ERROR(request, "friend request was already sent")
         return HttpResponse("already sent")
 
+
+#https://medium.com/analytics-vidhya/add-friends-with-689a2fa4e41d , referenced for friend requests
 @login_required
 def accept_friend_request(request,pk):
     friend_request=FriendRequest.objects.get(pk=pk)
@@ -131,6 +134,9 @@ def activity_log(request):
                'exp_total':exp_total}
     return render(request, 'gamifi/activity_log.html',context)
 
+
+
+#https://www.youtube.com/watch?v=UmljXZIypDc&list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p, refereneced Corey Schafer django tutorial series for profile makign
 @login_required
 def profile(request,username):
     # 'usr' is who the profile being viewed belongs to. "user" in the template is the person viewing the page
@@ -199,59 +205,6 @@ class ExerciseUpdateView(generic.UpdateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-# class AerobicCreateView(generic.CreateView):
-#     form_class = AerobicExerciseForm
-#     template_name = 'gamifi/exercise_form.html'
-#
-#     def form_valid(self, form):
-#         form.instance.user = self.request.user
-#         return super().form_valid(form)
-#
-#
-# class AerobicUpdateView(generic.UpdateView):
-#     model = AerobicExercise
-#     form_class = AerobicExerciseForm
-#     template_name = 'gamifi/exercise_form.html'
-#
-#     def form_valid(self, form):
-#         form.instance.user = self.request.user
-#         return super().form_valid(form)
-#
-# class StrengthCreateView(generic.CreateView):
-#     form_class = StrengthExerciseForm
-#     template_name = 'gamifi/exercise_form.html'
-#
-#     def form_valid(self, form):
-#         form.instance.user = self.request.user
-#         return super().form_valid(form)
-#
-#
-# class StrengthUpdateView(generic.UpdateView):
-#     model = StrengthExercise
-#     form_class = StrengthExerciseForm
-#     template_name = 'gamifi/exercise_form.html'
-#
-#     def form_valid(self, form):
-#         form.instance.user = self.request.user
-#         return super().form_valid(form)
-#
-# class FlexibilityCreateView(generic.CreateView):
-#     form_class = FlexibilityExerciseForm
-#     template_name = 'gamifi/exercise_form.html'
-#
-#     def form_valid(self, form):
-#         form.instance.user = self.request.user
-#         return super().form_valid(form)
-#
-#
-# class FlexibilityUpdateView(generic.UpdateView):
-#     model = FlexibilityExercise
-#     form_class = FlexibilityExerciseForm
-#     template_name = 'gamifi/exercise_form.html'
-#
-#     def form_valid(self, form):
-#         form.instance.user = self.request.user
-#         return super().form_valid(form)
 
 class LeaderboardListView(generic.ListView):
     model= User
