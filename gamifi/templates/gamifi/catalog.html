@@ -1,21 +1,23 @@
 {% extends 'gamifi/base.html' %}
 {% block content %}
+	<h1 style="text-align:center" class="display-1">Exercise Catalog</h1>
   <div class = "container">
     <br><br>
     <div class="row">
       {% for e in exercises %}
         <div class="col-md-4 col-sm-6 col-lg-3">
           <div class="card">
-            <img class="card-img-top" src="{{ e.image_url }}" alt="Card image cap">
+            <img class="card-img-top" src="{{ e.image_url }}" alt="Card image cap" onError="this.onerror=null;this.src='https://i.imgur.com/zRpRYNT.png';">
             <div class="card-body text-center">
-              <p class="card-title">{{ e.name }}</p>
+              <h5 class="card-title">{{ e.name }}</h5>
               <hr>
+			  <p><u>Works the:</u></p>
               <p class="card-text">{{e.category }}</p>
               <a href="{% url 'gamifi:exercise-detail' e.id %}"
               ><input
                 type="submit"
                 value="Learn More"
-                class="btn btn-danger btn-sm"
+                class="btn btn-outline-primary btn-sm"
                 type="button"
             /></a>
             </div>
