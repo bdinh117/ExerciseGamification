@@ -184,6 +184,7 @@ class ExerciseCreateView(generic.CreateView):
     form_class = ExerciseForm
     template_name = 'gamifi/exercise_form.html'
 
+    #Prepopulate form with url parameters if given
     def get_initial(self):
         initial = super().get_initial()
         if('name' in self.kwargs and 'type' in self.kwargs):
