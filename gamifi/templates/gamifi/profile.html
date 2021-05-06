@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 	<div class="media" style="justify-content: center">
-		<img class="account-img rounded-circle" src="{{ usr.profile.image.url }}" style="width:165px;height:165px;">
+		<img class="account-img rounded-circle" src="{{ usr.profile.image.url }}" style="width:165px;height:165px;" onError="this.onerror=null;this.src='http://zultimate.com/wp-content/uploads/2019/12/default-profile.png';">
 		<div class="align-self-center">
 			<h2 class="display-2">{{ usr.username }}</h2>
 			<h5 class="display-5">{{ usr.email }}</h5>
@@ -17,14 +17,19 @@
 		</div>
 	
   {% for comment in comments %}
-        <div class="comments" style="padding: 10px;">
+        <div class="comments" style="padding: 10px; text-align: center;">
           <p class="font-weight-bold">
-            {{user.username}} {{ comment.title }}
-            <span class=" text-muted font-weight-normal">
-              {{ comment.created_on }}
-            </span>
-          </p>
-          {{ comment.body | linebreaks }}
+            {{user.username}} commented on <span class=" text-muted font-weight-normal">
+            {{ comment.created_on }}
+          </span>:
+		  </p>
+		  <p>
+			<u><em>Title: </em>{{ comment.title }}</u>
+		  </p>
+		  <div>
+			{{ comment.body | linebreaks }}
+		  </div>
+		  
         </div>
         {% endfor %}
 
